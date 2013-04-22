@@ -18,6 +18,9 @@ Stock.prototype.fetchQuote = function(){
         this.fire("loaded");
     });
 };
+
+// Event listener code pulled from here
+// http://www.nczonline.net/blog/2010/03/09/custom-events-in-javascript/
 Stock.prototype.addListener =  function(type, listener){
     if (typeof this._listeners[type] == "undefined"){
         this._listeners[type] = [];
