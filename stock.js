@@ -1,8 +1,12 @@
 var Stock = function(ticker) {
+    // Stock Ticker Symbol ex. "GOOG"
     this.ticker = ticker.toUpperCase();
+    // Market data
     this.data = null;
+    // Holds event listeners
     this._listeners = {}
 }
+// Fetches the most recent market information from markitondemand.com
 Stock.prototype.fetchQuote = function(){
     var stock = this;
     $.ajax({
@@ -28,6 +32,7 @@ Stock.prototype.addListener =  function(type, listener){
 
     this._listeners[type].push(listener);
 };
+// Trigger a particular event
 Stock.prototype.fire = function(event){
     if (typeof event == "string"){
         event = { type: event };
@@ -58,3 +63,10 @@ Stock.prototype.removeListener = function(type, listener){
         }
     }
 };
+
+// TODO METHODS
+// Start fetching quotes every "interval"
+Stock.prototype.startFetching = function(interval) {};
+
+// Stop fetching quotes
+Stock.prototype.stopFetching = function() {};
