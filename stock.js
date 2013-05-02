@@ -3,8 +3,16 @@ var Stock = function(ticker) {
     this.ticker = ticker.toUpperCase();
     // Market data
     this.data = null;
+    this.prev = null;
     // Holds event listeners
     this._listeners = {}
+    this.fetching = false;
+    this.addListener("loaded", function() {
+        if(this.fetching == true) {
+            this.fetchQuote();
+        }
+    });
+
 }
 // Fetches the most recent market information from markitondemand.com
 Stock.prototype.fetchQuote = function(){
@@ -12,14 +20,22 @@ Stock.prototype.fetchQuote = function(){
     $.ajax({
         type: 'GET',
         async: false,
-        url: 'http://dev.markitondemand.com/Api/Quote/jsonp?symbol='+stock.ticker+'&jsoncallback=process',
+        url: 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22'+stock.ticker+'%22)%0A%09%09&format=json&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=process',
         jsonp: true,
         contentType: "application/json",
         dataType: 'jsonp',
         jsonpCallback: "process"
     }).done(function(data) {
-        stock.data = data.Data;
-        this.fire("loaded");
+        stock.prev = stock.data;
+        if(data.query.results) {
+            stock.data = data.query.results.quote;
+            stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("-","").replace("%","") / 100
+        }
+        console.log(data);
+    }).fail(function(xhr, text) {
+        console.log(text);
+    }).always(function() {
+        stock.fire("loaded");
     });
 };
 
@@ -66,7 +82,12 @@ Stock.prototype.removeListener = function(type, listener){
 
 // TODO METHODS
 // Start fetching quotes every "interval"
-Stock.prototype.startFetching = function(interval) {};
+Stock.prototype.startFetching = function(interval) {
+    this.fetching = true;
+    this.fetchQuote();
+};
 
 // Stop fetching quotes
-Stock.prototype.stopFetching = function() {};
+Stock.prototype.stopFetching = function() {
+    this.fetching = false;
+};

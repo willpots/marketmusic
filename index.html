@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>stock.js example</title>
+	<style type="text/css">
+	#name {
+		width:400px;
+		margin:0 auto;
+		font-weight: bold;
+		text-align: center;
+		font-family: sans-serif;
+		font-size: 40px;
+		padding:0;		
+	}
+	#change {
+		width:400px;
+		margin:0 auto;
+		font-weight: bold;
+		text-align: center;
+		font-family: sans-serif;
+		font-size: 40px;
+		padding:0;
+	}
+	#stock {
+		width:400px;
+		display:block;
+		margin:10px auto;
+		padding:10px;
+		border-radius: 10px;
+		border:1pt solid #aaa;
+		font-family: sans-serif;
+		font-weight: bold;
+		font-size: 30px;
+		outline:none;
+	}
+	</style>
+
+	<script src="jquery.js"></script>
+	<script src="stock.js"></script>
+	<script>
+		var stock = new Stock("GOOG");
+		$(document).ready(function() {
+			$("body").click(function() {
+				stock.fetchQuote();
+			})
+			stock.addListener("loaded", function() {
+				$("#name").html(this.data.Symbol);
+				console.log(this.data.PercentChange);
+				$("#change").html(this.data.PercentChange);
+				var number = this.data.PercentChange.replace("+","").replace("-","").replace("%","") / 100;
+				// if(number > 0) {
+				// 	console.log("#00"+(Math.round(number*255)).toString(16)+"00");
+				// 	$("#change").css("color", "#00"+(Math.round(number*255)).toString(16)+"00");
+				// } else if(number == 0) {
+				// 	$("#change").css("color", "#000000");
+				// } else {
+				// 	$("#change").css("color", "#"+(Math.round(number*255)).toString(16)+"0000");
+				// }
+			});
+			stock.startFetching();
+			$("#stock").keypress(function(e) {
+				if(e.charCode == 13) {
+					stock.ticker = this.value;
+				}
+			});
+		});
+
+
+	</script>
+
+
+</head>
+<body>
+	<div id="name">No Company</div>
+	<div id="change">No Quote</div>
+	<input id="stock" type="text" value="GOOG" placeholder="Stock Name">
+
+</body>
+</html>
