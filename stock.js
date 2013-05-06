@@ -1,5 +1,6 @@
 var Stock = function(ticker) {
     // Stock Ticker Symbol ex. "GOOG"
+    ticker = ticker || "";
     this.ticker = ticker.toUpperCase();
     // Market data
     this.data = null;
@@ -29,9 +30,9 @@ Stock.prototype.fetchQuote = function(){
         stock.prev = stock.data;
         if(data.query.results) {
             stock.data = data.query.results.quote;
-            stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("-","").replace("%","") / 100
+            stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100
         }
-        console.log(data);
+        // console.log(data);
     }).fail(function(xhr, text) {
         console.log(text);
     }).always(function() {
