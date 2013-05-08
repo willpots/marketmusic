@@ -142,6 +142,21 @@ var MusicBox = function() {
             var starttime = now();
             var tempo = (1 - Math.abs(change))/2;
             // console.log(tempo);
+            if(change < -0.05) {
+            for (i = 0; i < 30; i++) {
+                playTone(getNote(scale), starttime + tempo * i);
+                playTone2(getNote(scale), starttime + tempo * i);
+                playTone2(1.1*(getNote(scale)), starttime + tempo * i);
+            }
+            for (i = 0; i < 15; i++) {
+                playTone2(getNote(scale), starttime + 2 * tempo * i);
+            }
+            for (i = 0; i < 7; i++) {
+                playTone3(getNote(scale), starttime + 4 * tempo * i);
+                playTone4(getNote(scale), starttime + 4 * tempo * i);
+            }
+            
+            } else if(change >= -0.05) {
             for (i = 0; i < 30; i++) {
                 playTone(getNote(scale), starttime + tempo * i);
                 playTone2(getNote(scale), starttime + tempo * i);
@@ -152,6 +167,7 @@ var MusicBox = function() {
             for (i = 0; i < 7; i++) {
                 playTone3(getNote(scale), starttime + 4 * tempo * i);
                 playTone4(getNote(scale), starttime + 4 * tempo * i);
+            }
             }
             latestTime = Date.now() + ( 29 * tempo * 1000 );
         }
