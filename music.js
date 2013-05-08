@@ -129,7 +129,7 @@ var MusicBox = function() {
             var scale = "major";
             // console.log(change);
             if(change < -0.05) {
-                scale = "minpent";
+                scale = "chromatic";
             } else if(change >= -0.05 && change < -0.01) {
                 scale = "minor";
             } else if(change >= -0.01 && change < 0.01) {
