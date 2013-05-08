@@ -94,11 +94,19 @@
 		background: -ms-linear-gradient(top,#008dfd 30%,#0370ea 100%);
 		background: linear-gradient(top,#008dfd 30%,#0370ea 100%);
 	}
+	#canvas {
+		position: fixed;
+		z-index: -100;
+		background-color:#333;
+		width:100%;
+		height:100%;
+	}
+
 	</style>
 
 	<script src="jquery.js"></script>
-	<script src="raphael.js"></script>
-	<script src="g.raphael.js"></script>
+
+
 	<script src="stock.js"></script>
 	<script src="music.js"></script>
 	<script>
@@ -106,7 +114,7 @@
 		var m;
 		var canvas;
 		var prices = new Array();
-		$(document).ready(function() {
+			$(document).ready(function() {
 			stock = new Stock();
 			m = new MusicBox();
 
@@ -136,12 +144,14 @@
 				m.mute(true);
 			});
 
+
 		});
 	</script>
 
 
 </head>
 <body>
+	<div id="canvas"></div>
 	<div id="name">No Company</div>
 	<div id="change">No Quote</div>
 	<div class="buttons">
