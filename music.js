@@ -56,6 +56,14 @@ var MusicBox = function() {
     }
     request5.send();
 
+    this.mute = function(test) {
+        if(test == true) {
+            gainNode.gain.value = 0;
+        } else {
+            gainNode.gain.value = 1;
+        }
+    }
+
     function playTone(index, time) { 
         var source = context.createBufferSource();
         source.buffer = buffer;
@@ -72,13 +80,6 @@ var MusicBox = function() {
         source.connect(gainNode);
         gainNode.connect(context.destination);
         source.noteOn(time);
-    }
-    this.mute = function(test) {
-        if(test == true) {
-            gainNode.gain.value = 0;
-        } else {
-            gainNode.gain.value = 1;
-        }
     }
     function playTone3(index, time) { 
         var source = context.createBufferSource();
@@ -120,71 +121,6 @@ var MusicBox = function() {
         scales["chromatic"] = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
         var note = Math.floor(Math.random() * scales[s].length)
         return scales[s][note];
-    }
-
-    this.playMajorPattern = function() {
-        var starttime = now();
-        for (i = 0; i < 30; i++) {
-            playTone(getNote("major"), starttime + .2 * i);
-        }
-        for (i = 0; i < 15; i++) {
-            playTone(getNote("major"), starttime + .4 * i);
-        }
-        for (i = 0; i < 7; i++) {
-            playTone(getNote("major"), starttime + .8 * i);
-        }
-    }
-
-    this.playMinorPattern = function() {
-        var starttime = now();
-        for (i = 0; i < 30; i++) {
-            playTone(getNote("minor"), starttime + .2 * i);
-        }
-        for (i = 0; i < 15; i++) {
-            playTone(getNote("minor"), starttime + .4 * i);
-        }
-        for (i = 0; i < 7; i++) {
-            playTone(getNote("minor"), starttime + .8 * i);
-        }
-    }
-
-    this.playMajPentPattern = function(time) {
-        var t = time || .2;
-        var starttime = now();
-        for (i = 0; i < 30; i++) {
-            playTone(getNote("majpent"), starttime + t * i);
-        }
-        for (i = 0; i < 15; i++) {
-            playTone2(getNote("majpent"), starttime + 2 * t * i);
-        }
-        for (i = 0; i < 7; i++) {
-            playTone3(getNote("majpent"), starttime + 4 * t * i);
-            playTone4(getNote("majpent"), starttime + 4 * t * i);
-        }
-    }
-
-    this.playSlowMajPentPattern = function(time) {
-        var t = time || 2;
-        var starttime = now();
-        for (i = 0; i < 30; i++) {
-            playTone(getNote("majpent"), starttime + t * i);
-        }
-    }
-
-    this.playMinPentPattern = function() {
-        var starttime = now();
-        for (i = 0; i < 30; i++) {
-            playTone(getNote("minpent"), starttime + .2 * i);
-            playTone2(getNote("minpent"), starttime + .4 * i);
-        }
-        for (i = 0; i < 15; i++) {
-            playTone2(getNote("minpent"), starttime + .4 * i);
-        }
-        for (i = 0; i < 7; i++) {
-            playTone3(getNote("minpent"), starttime + .8 * i);
-            playTone4(getNote("minpent"), starttime + .8 * i);
-        }
-
     }
 
     this.playPattern = function(stock) {
