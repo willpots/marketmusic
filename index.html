@@ -3,161 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>stock.js example</title>
-	<style type="text/css">
-	html, body {
-		margin:0;
-		padding:0;
-	}
-	#name {
-		width:400px;
-		margin:0 auto;
-		font-weight: bold;
-		text-align: center;
-		font-family: sans-serif;
-		font-size: 40px;
-		padding:0;	
-		color:#fff;	
-	}
-	#change {
-		width:400px;
-		margin:0 auto;
-		font-weight: bold;
-		text-align: center;
-		font-family: "Open Sans", sans-serif;
-		font-size: 40px;
-		padding:0;
-		color:#fff;
-	}
-	#stock {
-		width:400px;
-		display:block;
-		margin:10px auto;
-		padding:10px;
-		border-radius: 3px;
-		border:1pt solid #aaa;
-		font-family: monospace;
-		font-weight: lighter;
-		font-size: 30px;
-		outline:none;
-
-		background: #0370ea;
-		background: -moz-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#008dfd),color-stop(100%,#0370ea));
-		background: -webkit-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -o-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -ms-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: linear-gradient(top,#008dfd 0,#0370ea 100%);
-		border: 1px solid #076bd2;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
-		color: #fff !important;
-	}
-	.buttons {
-		text-align: center;
-	}
-	.buttons button {
-		padding: 10px;
-		background:white;
-		border:1pt solid #aaa;
-		border-radius: 10px;
-		font-family: sans-serif;
-		font-weight: bold;
-		font-size: 30px;
-
-		background: #0370ea;
-		background: -moz-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#008dfd),color-stop(100%,#0370ea));
-		background: -webkit-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -o-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: -ms-linear-gradient(top,#008dfd 0,#0370ea 100%);
-		background: linear-gradient(top,#008dfd 0,#0370ea 100%);
-		border: 1px solid #076bd2;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
-		color: #fff !important;
-		display: inline-block;
-		font-size: 13px;
-		font-weight: 700;
-		line-height: 1.3;
-		padding: 8px 25px;
-		text-align: center;
-		text-decoration: none !important;
-		text-shadow: 1px 1px 1px #076bd2;
-		cursor: pointer;
-
-	}
-	.buttons button:active {
-		background: -moz-linear-gradient(top,#008dfd 30%,#0370ea 100%);
-		background: -webkit-gradient(linear,left top,left bottom,color-stop(30%,#008dfd),color-stop(100%,#0370ea));
-		background: -webkit-linear-gradient(top,#008dfd 30%,#0370ea 100%);
-		background: -o-linear-gradient(top,#008dfd 30%,#0370ea 100%);
-		background: -ms-linear-gradient(top,#008dfd 30%,#0370ea 100%);
-		background: linear-gradient(top,#008dfd 30%,#0370ea 100%);
-	}
-	#canvas {
-		position: fixed;
-		z-index: -100;
-		background-color:#333;
-		width:100%;
-		height:100%;
-	}
-
-	</style>
-
+	<link rel="stylesheet" href="style.css">
 	<script src="jquery.js"></script>
-
+	<script src="ocanvas.js"></script>
 
 	<script src="stock.js"></script>
 	<script src="music.js"></script>
-	<script>
-		var stock;
-		var m;
-		var canvas;
-		var prices = new Array();
-			$(document).ready(function() {
-			stock = new Stock();
-			m = new MusicBox();
-
-			stock.addListener("loaded", function() {
-				if(this.data) {
-					$("#name").html(this.data.Name);
-					$("#change").html(this.data.PercentChange);
-					prices.push(new Array(Date.now(), this.data.Price));
-				}
-			});
-			$("#stock").keypress(function(e) {
-				if(e.charCode == 13) {
-					console.log("Loading "+this.value);
-					stock.ticker = this.value.toUpperCase();
-					stock.fetchQuote();
-					prices = new Array();
-				}
-			});
-			$("#start").click(function(e) {
-				stock.startFetching();
-				m.startPlaying(stock);
-				m.mute(false);
-			});
-			$("#stop").click(function(e) {
-				stock.stopFetching();
-				m.stopPlaying();
-				m.mute(true);
-			});
-
-
-		});
-	</script>
+	<script src="script.js"></script>
 
 
 </head>
 <body>
-	<div id="canvas"></div>
-	<div id="name">No Company</div>
-	<div id="change">No Quote</div>
+	<canvas id="canvas"></canvas>
+	<h1 class="title"><span>market</span><span class="bold">music</span></h1>
+	<div id="name">no company</div>
+	<div id="change"><br></div>
 	<div class="buttons">
 		<button id="start">Start</button>
 		<button id="stop">Stop</button>
 	</div>
-	<input id="stock" type="text" value="" placeholder="Stock Name" autofocus>
+	<input id="stock" type="text" value="" placeholder="enter a stock. hit enter. hit start." autofocus>
 </body>
 </html>

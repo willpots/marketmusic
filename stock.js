@@ -1,4 +1,5 @@
-var Stock = function(ticker) {
+var Stock = function(ticker, c) {
+    var stock_canvas = c || null;
     // Stock Ticker Symbol ex. "GOOG"
     ticker = ticker || "";
     this.ticker = ticker.toUpperCase();
@@ -13,8 +14,26 @@ var Stock = function(ticker) {
             this.fetchQuote();
         }
     });
-
 }
+
+
+// Canvas utility functions
+Stock.prototype.setCanvas = function(c) {
+    stock_canvas = c;
+    stock_canvas.stock = this;
+};
+Stock.prototype.getCanvas = function() {
+    return stock_canvas;
+};
+Stock.prototype.setTicker = function(t) {
+    this.ticker = t;
+    if(stock_canvas) {
+        stock_canvas.points = [];
+    }
+};
+
+
+
 // Fetches the most recent market information from markitondemand.com
 Stock.prototype.fetchQuote = function(){
     var stock = this;
@@ -86,9 +105,11 @@ Stock.prototype.removeListener = function(type, listener){
 Stock.prototype.startFetching = function(interval) {
     this.fetching = true;
     this.fetchQuote();
+    stock_canvas.startAddPoints();
 };
 
 // Stop fetching quotes
 Stock.prototype.stopFetching = function() {
     this.fetching = false;
+    stock_canvas.stopAddPoints();
 };
