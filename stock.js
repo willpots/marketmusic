@@ -50,6 +50,7 @@ Stock.prototype.fetchQuote = function(){
         if(data.query.results) {
             stock.data = data.query.results.quote;
             stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100
+            stock.data.PercentChangePercent = stock.data.PercentChange.replace("+","").replace("%","")
         }
         // console.log(data);
     }).fail(function(xhr, text) {

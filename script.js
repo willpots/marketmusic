@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 	stock.addListener("loaded", function() {
 		if (this.data) {
-			$("#name").html(this.data.Name);
+			$("#name").html(this.data.Name.toLowerCase());
 			$("#change").html(this.data.PercentChange);
 			prices.push(new Array(Date.now(), this.data.Price));
 		}
@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$("#stock").keypress(function(e) {
 		if (e.charCode == 13) {
 			console.log("Loading " + this.value);
-			this.value = this.value.toUpperCase();
+			this.value = this.value.toLowerCase();
 			stock.setTicker(this.value);
 			stock.fetchQuote();
 			prices = new Array();
@@ -63,9 +63,9 @@ function loadCanvas() {
 				circles[x] = this.display.ellipse({
 					x: 10 + x * interval + interval * 0.5,
 					y: calculateYCoordinate(this.points[x],min,max,h),
-					radius_x: 3,
-					radius_y: 3,
-					fill: "#f00"
+					radius_x: 1,
+					radius_y: 1,
+					fill: "#0370ea"
 				});
 				canvas.addChild(circles[x]);
 			}
@@ -92,7 +92,7 @@ function loadCanvas() {
 							x: circles[x].x,
 							y: circles[x].y
 						},
-						stroke: "3px #f00",
+						stroke: "3px #0370ea",
 						cap: "round"
 					});
 					canvas.addChild(lines[x - 1]);
@@ -105,9 +105,9 @@ function loadCanvas() {
 			var c = this;
 			this.int = window.setInterval(function() {
 				if (c.stock.data.LastTradePriceOnly) {
-					c.points.push(parseInt(c.stock.data.LastTradePriceOnly));
+					c.points.push(parseFloat(c.stock.data.LastTradePriceOnly));
 				}
-			}, 1000);
+			}, 2000);
 		}
 	};
 	canvas.stopAddPoints = function() {
@@ -120,7 +120,7 @@ function calculateYCoordinate(y,min,max,h) {
 	if(max - min == 0) {
 		return (h-430)/2 + 400;
 	} else {
-		return ((y - min) / (max - min)) * (h - 430) + 400;
+		return ((1 - (y - min) / (max - min))) * (h - 430) + 400;
 	}
 }
 function minMax(arr) {
