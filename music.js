@@ -1,11 +1,11 @@
 var MusicBox = function() {
     var scale = new Array(.5, 1, 1.059463, 1.122462, 1.189207, 1.259921, 1.334840, 1.414214, 1.498307, 1.587401, 1.681793, 1.781797, 1.887749, 2);
     
-    var url = "tribal.wav"; 
-    var url2 = "electra.wav";
-    var url3 = "tom1.wav";
-    var url4 = "tom2.wav";
-    var url5 = "flute.wav";
+    var url = "music/tribal.wav"; 
+    var url2 = "music/electra.wav";
+    var url3 = "music/tom1.wav";
+    var url4 = "music/tom2.wav";
+    var url5 = "music/flute.wav";
     var context = new webkitAudioContext(); 
     var source; 
     var buffer; 
