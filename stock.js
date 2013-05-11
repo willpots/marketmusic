@@ -7,14 +7,14 @@ var Stock = function(ticker, c) {
     this.data = null;
     this.prev = null;
     // Holds event listeners
-    this._listeners = {}
+    this._listeners = {};
     this.fetching = false;
     this.addListener("loaded", function() {
-        if(this.fetching == true) {
+        if(this.fetching === true) {
             this.fetchQuote();
         }
     });
-}
+};
 
 
 // Canvas utility functions
@@ -49,8 +49,8 @@ Stock.prototype.fetchQuote = function(){
         stock.prev = stock.data;
         if(data.query.results) {
             stock.data = data.query.results.quote;
-            stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100
-            stock.data.PercentChangePercent = stock.data.PercentChange.replace("+","").replace("%","")
+            stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100;
+            stock.data.PercentChangePercent = stock.data.PercentChange.replace("+","").replace("%","");
         }
         // console.log(data);
     }).fail(function(xhr, text) {

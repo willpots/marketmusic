@@ -1,2 +1,3 @@
-<h1><span style="font-weight:300;">market</span>music</h1>
-Underlying code for MarketMusic
+#market music
+
+This is the general repository for market music. market music is a music generator that uses the performance of publicly traded stocks to create music.
