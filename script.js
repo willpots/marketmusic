@@ -11,7 +11,7 @@ $(document).ready(function() {
 	stock.addListener("loaded", function() {
 		if (this.data) {
 			$("#name").html(this.data.Name.toLowerCase());
-			$("#change").html(this.data.PercentChange);
+			$("#change").html(this.data.PercentChangeNumber * 100 + "%");
 			prices.push(new Array(Date.now(), this.data.Price));
 		}
 	});

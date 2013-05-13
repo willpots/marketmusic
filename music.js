@@ -127,7 +127,7 @@ var MusicBox = function() {
 
     this.playPattern = function(stock) {
         if (stock.data !== null) {
-            var change = stock.data.PercentChange.replace("+", "").replace("%", "") / 100;
+            var change = stock.data.PercentChangeNumber;
             var scale = "major";
             // console.log(change);
             if (change < -0.05) {
