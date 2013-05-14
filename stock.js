@@ -53,8 +53,8 @@ Stock.prototype.fetchQuote = function(){
                 stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100;
                 stock.data.PercentChangePercent = stock.data.PercentChange.replace("+","").replace("%","");
             } else if (stock.data.Change) {
-                stock.data.PercentChangeNumber = stock.data.Change.replace("+","").replace("%","") / stock.data.LastTradePriceOnly;
-                stock.data.PercentChangePercent = stock.data.Change.replace("+","").replace("%","") / stock.data.LastTradePriceOnly * 100;
+                stock.data.PercentChangeNumber = stock.data.Change.replace("+","").replace("%","") / ((stock.data.LastTradePriceOnly * 2 + stock.data.Change.replace("+","").replace("%",""))/2);
+                stock.data.PercentChangePercent = stock.data.Change.replace("+","").replace("%","") / ((stock.data.LastTradePriceOnly * 2 + stock.data.Change.replace("+","").replace("%",""))/2);
             }
         }
         // console.log(data);

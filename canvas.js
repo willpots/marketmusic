@@ -11,7 +11,7 @@ var Canvas = function(id) {
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		canvas.points = [];
-		canvas.setLoop(function() {
+		canvas.superDraw = function() {
 			var h = window.innerHeight;
 			var w = window.innerWidth;
 			var max = minMax(this.points).max;
@@ -62,13 +62,14 @@ var Canvas = function(id) {
 					}
 				}
 			}
-		}).start();
+		};
 		canvas.startAddPoints = function() {
 			if (this.stock) {
 				var c = this;
 				this.int = window.setInterval(function() {
 					if (c.stock.data.LastTradePriceOnly) {
 						c.points.push(parseFloat(c.stock.data.LastTradePriceOnly));
+						c.superDraw();
 					}
 				}, 2000);
 			}
