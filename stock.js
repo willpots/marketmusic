@@ -53,7 +53,7 @@ Stock.prototype.fetchQuote = function(){
                 stock.data.PercentChangeNumber = stock.data.PercentChange.replace("+","").replace("%","") / 100;
                 stock.data.PercentChangePercent = stock.data.PercentChange.replace("+","").replace("%","");
             } else if (stock.data.Change) {
-                stock.data.PercentChangeNumber = stock.data.Change.replace("+","").replace("%","") / ((parseInt(stock.data.LastTradePriceOnly) * 2 + parseInt(stock.data.Change.replace("+","").replace("%","")))/2);
+                stock.data.PercentChangeNumber = stock.data.Change.replace("+","").replace("%","") / ((parseInt(stock.data.LastTradePriceOnly) - parseInt(stock.data.Change.replace("+","").replace("%",""))));
                 stock.data.PercentChangeNumber = Math.round(stock.data.PercentChangeNumber * 10000) / 10000;
                 stock.data.PercentChangePercent = stock.data.PercentChangeNumber * 100;
                 stock.data.PercentChangePercent = Math.round(stock.data.PercentChangePercent * 10000) / 10000;
